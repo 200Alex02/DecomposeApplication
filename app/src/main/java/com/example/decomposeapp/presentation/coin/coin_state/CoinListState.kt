@@ -1,4 +1,4 @@
-package com.example.decomposeapp.presentation.coin
+package com.example.decomposeapp.presentation.coin.coin_state
 
 import com.example.decomposeapp.domain.model.Coin
 

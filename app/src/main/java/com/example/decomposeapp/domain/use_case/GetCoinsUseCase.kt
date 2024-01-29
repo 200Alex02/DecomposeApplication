@@ -1,5 +1,6 @@
 package com.example.decomposeapp.domain.use_case
 
+import android.util.Log
 import com.example.decomposeapp.common.Resource
 import com.example.decomposeapp.data.remote.dto.toCoin
 import com.example.decomposeapp.domain.model.Coin
@@ -14,6 +15,7 @@ class GetCoinsUseCase @Inject constructor(
     private val repository: CoinRepository
 ) {
     operator fun invoke(): Flow<Resource<List<Coin>>> = flow {
+        Log.d("tag6", "вызов")
         try {
             emit(Resource.Loading())
             val coins = repository.getCoins().map { it.toCoin() }
