@@ -1,6 +1,5 @@
 package com.example.decomposeapp.presentation.coin.components
 
-import android.util.Log
 import com.arkivanov.decompose.ComponentContext
 import com.example.decomposeapp.common.Resource
 import com.example.decomposeapp.domain.use_case.GetCoinsUseCase
@@ -30,10 +29,8 @@ class RealCoinListComponent @Inject constructor(
     }
 
     private fun loadCoins() {
-        Log.d("tag5", "вызов ")
         coroutineScope.launch {
             getCoinsUseCase().onEach { restult ->
-                Log.d("tag6", "вызов")
                 when (restult) {
                     is Resource.Loading -> {
                         coinListState.update { it.copy(isLoading = true) }
