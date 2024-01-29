@@ -1,4 +1,4 @@
-package com.example.decomposeapp.presentation.coin_screens_component
+package com.example.decomposeapp.presentation.coin_screens.coin_screens_component
 
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.value.Value

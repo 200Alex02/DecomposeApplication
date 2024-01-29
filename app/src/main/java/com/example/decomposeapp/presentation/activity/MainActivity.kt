@@ -6,8 +6,8 @@ import androidx.activity.compose.setContent
 import com.arkivanov.decompose.retainedComponent
 import com.example.decomposeapp.domain.use_case.GetCoinUseCaseById
 import com.example.decomposeapp.domain.use_case.GetCoinsUseCase
-import com.example.decomposeapp.presentation.coin_screens_component.CoinScreensUi
-import com.example.decomposeapp.presentation.coin_screens_component.RealCoinScreensComponent
+import com.example.decomposeapp.presentation.root_bottom.root_bottom_component.RealRootBottomComponent
+import com.example.decomposeapp.presentation.root_bottom.root_bottom_ui.RootBottomUi
 import com.example.decomposeapp.ui.theme.DecomposeAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -23,14 +23,14 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         val root = retainedComponent {
-            RealCoinScreensComponent(
+            RealRootBottomComponent(
                 componentContext = it, getCoinsUseCase = getCoinsUseCase,
                 getCoinUseCaseById = getCoinsUseCaseById
             )
         }
         setContent {
             DecomposeAppTheme {
-                CoinScreensUi(component = root)
+                RootBottomUi(component = root)
             }
         }
     }
