@@ -7,5 +7,11 @@ interface CoinDetailComponent {
 
     val coinDetailState: StateFlow<CoinDetailState>
 
-    fun onBackClick()
+
+    /*fun interface Factory {
+        operator fun invoke(
+            componentContext: ComponentContext,
+            coinId: String
+        ): CoinDetailComponent
+    }*/
 }

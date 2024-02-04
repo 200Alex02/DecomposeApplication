@@ -1,24 +1,24 @@
 package com.example.decomposeapp.presentation.coin_screens.coin_screens_component
 
 import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
-import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.pushNew
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.essenty.parcelable.Parcelable
-import com.example.decomposeapp.domain.use_case.GetCoinUseCaseById
-import com.example.decomposeapp.domain.use_case.GetCoinsUseCase
+import com.example.decompose.domain.use_case.GetCoinUseCase
+import com.example.decompose.domain.use_case.GetCoinUseCaseById
 import com.example.decomposeapp.presentation.coin.components.RealCoinListComponent
 import com.example.decomposeapp.presentation.coin_detail.components.RealCoinDetailComponent
 import kotlinx.parcelize.Parcelize
 import javax.inject.Inject
 
 class RealCoinScreensComponent @Inject constructor(
-    private val getCoinsUseCase: GetCoinsUseCase,
+    componentContext: ComponentContext,
+    private val getCoinUseCase: GetCoinUseCase,
     private val getCoinUseCaseById: GetCoinUseCaseById,
-    componentContext: ComponentContext
 ) : ComponentContext by componentContext, CoinScreensComponent {
 
     private val navigation = StackNavigation<ChildConfig>()
@@ -30,6 +30,7 @@ class RealCoinScreensComponent @Inject constructor(
         childFactory = ::createChild
     )
 
+    @OptIn(ExperimentalDecomposeApi::class)
     private fun createChild(
         config: ChildConfig,
         componentContext: ComponentContext
@@ -39,10 +40,11 @@ class RealCoinScreensComponent @Inject constructor(
             CoinScreensComponent.Child.List(
                 RealCoinListComponent(
                     componentContext = componentContext,
-                    onItemSelected = { coinId ->
+                    onItemSelected =  {coinId ->
                         navigation.pushNew(ChildConfig.Details(coinId))
                     },
-                    getCoinsUseCase = getCoinsUseCase
+                    getCoinsUseCase = getCoinUseCase,
+                    onBack = {}
                 )
             )
         }
@@ -51,11 +53,9 @@ class RealCoinScreensComponent @Inject constructor(
             CoinScreensComponent.Child.Details(
                 RealCoinDetailComponent(
                     componentContext = componentContext,
-                    getCoinUseCaseById = getCoinUseCaseById,
                     coinId = config.coinId,
-                    onBackClick = {
-                        navigation.pop()
-                    })
+                    getCoinUseCaseById = getCoinUseCaseById
+                )
             )
         }
     }
@@ -63,10 +63,9 @@ class RealCoinScreensComponent @Inject constructor(
     sealed interface ChildConfig : Parcelable {
 
         @Parcelize
-        object List : ChildConfig
+        data object List : ChildConfig
 
         @Parcelize
         data class Details(val coinId: String) : ChildConfig
     }
-
 }

@@ -1,0 +1,4 @@
+R_DEF: Internal format may change without notice
+local
+string htttp_exeption
+string io_exeption

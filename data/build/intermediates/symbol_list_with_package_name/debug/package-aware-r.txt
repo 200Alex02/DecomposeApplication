@@ -1,0 +1,3 @@
+com.example.decompose.data1
+string htttp_exeption
+string io_exeption

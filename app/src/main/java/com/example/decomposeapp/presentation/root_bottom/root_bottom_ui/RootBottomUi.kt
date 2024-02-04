@@ -7,6 +7,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBarItem
@@ -15,10 +16,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.Children
@@ -28,13 +27,12 @@ import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.scale
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.stackAnimation
 import com.example.decomposeapp.presentation.coin_screens.coin_screen_ui.CoinScreensUi
 import com.example.decomposeapp.presentation.root_bottom.root_bottom_component.RootBottomComponent
-import com.example.decomposeapp.presentation.settings.settings_ui.SettingsUi
+import com.example.decomposeapp.presentation.settings.SettingsUi
 
-data class ScreensBottom(val name: String, val openScreen: () -> Unit, val isSelected: Boolean)
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RootBottomUi(component: RootBottomComponent) {
-    var selectedItem by remember { mutableIntStateOf(0) }
     val screens by remember {
         mutableStateOf(
             listOf(
@@ -51,9 +49,9 @@ fun RootBottomUi(component: RootBottomComponent) {
                 actions = {
                     screens.forEachIndexed { index, screensBottom ->
                         NavigationBarItem(
-                            selected = selectedItem == index,
+                            selected = component.selectedItem.value == index,
                             onClick = {
-                                selectedItem = index
+                                component.selectedItem.value = index
                                 screensBottom.openScreen()
                             },
                             icon = {

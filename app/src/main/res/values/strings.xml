@@ -1,3 +1,5 @@
-<resources>
+<resources >
     <string name="app_name">DecomposeApp</string>
+    <string name="about_app">О приложении</string>
+    <string name="htttp_exeption">An unexpected error occurred</string>
 </resources>

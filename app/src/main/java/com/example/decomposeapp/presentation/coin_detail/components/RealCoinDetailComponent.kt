@@ -1,21 +1,20 @@
 package com.example.decomposeapp.presentation.coin_detail.components
 
 import com.arkivanov.decompose.ComponentContext
-import com.example.decomposeapp.common.Resource
-import com.example.decomposeapp.domain.use_case.GetCoinUseCaseById
+import com.example.decompose.domain.util.Resource
+import com.example.decompose.domain.use_case.GetCoinUseCaseById
 import com.example.decomposeapp.presentation.coin_detail.coin_detail_state.CoinDetailState
 import com.example.decomposeapp.presentation.util.componentCoroutineScope
+import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class RealCoinDetailComponent @Inject constructor(
+class RealCoinDetailComponent @AssistedInject constructor(
     private val getCoinUseCaseById: GetCoinUseCaseById,
     private val coinId: String,
-    private val onBackClick: () -> Unit,
     componentContext: ComponentContext
 ) : ComponentContext by componentContext, CoinDetailComponent {
 
@@ -54,7 +53,12 @@ class RealCoinDetailComponent @Inject constructor(
         }
     }
 
-    override fun onBackClick() {
-        onBackClick.invoke()
-    }
+    /*@AssistedFactory
+    interface Factory{
+        fun create(
+            @Assisted("componentContext") componentContext: ComponentContext,
+            @Assisted("coinId") coinId: String
+        ): RealCoinDetailComponent
+    }*/
+
 }

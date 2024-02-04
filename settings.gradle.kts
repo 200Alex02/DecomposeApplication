@@ -15,4 +15,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "DecomposeApp"
 include(":app")
- 
+include(":data")
+
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+include(":domain")

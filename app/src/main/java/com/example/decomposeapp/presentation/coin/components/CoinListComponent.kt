@@ -7,5 +7,15 @@ interface CoinListComponent {
 
     val coinListState: StateFlow<CoinListState>
 
+    fun refreshData()
+
     fun onCoinClick(coinId: String)
+
+    fun onBack()
+    /*fun interface Factory {
+        operator fun invoke(
+            componentContext: ComponentContext,
+            onItemSelected: (id: String) -> Unit,
+        ): CoinListComponent
+    }*/
 }

@@ -30,7 +30,9 @@ fun CoinDetailUi(
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(20.dp)
             ) {
-                item {
+                item(
+                    key = coin.coinId
+                ) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween
@@ -65,7 +67,10 @@ fun CoinDetailUi(
                         horizontalArrangement = Arrangement.spacedBy(10.dp),
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        items(coin.tags) { tag ->
+                        items(
+                            coin.tags,
+                            key = { it }
+                        ) { tag ->
                             CoinTag(tag = tag)
                         }
                     }
@@ -76,7 +81,11 @@ fun CoinDetailUi(
                     )
                     Spacer(modifier = Modifier.height(15.dp))
                 }
-                items(coin.team) { teamMember ->
+                items(
+                    coin.team,
+                    key = { coin -> coin.id },
+                    contentType = { it.id }
+                    ) { teamMember ->
                     TeamListItem(
                         teamMember = teamMember,
                         modifier = Modifier

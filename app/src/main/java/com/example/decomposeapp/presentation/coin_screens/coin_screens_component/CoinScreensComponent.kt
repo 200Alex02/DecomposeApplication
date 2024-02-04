@@ -13,4 +13,12 @@ interface CoinScreensComponent {
         class List(val component: CoinListComponent) : Child
         class Details(val component: CoinDetailComponent) : Child
     }
+
+    /*@AssistedFactory
+    fun interface Factory {
+
+        operator fun invoke(
+            @Assisted("componentContext") componentContext: ComponentContext
+        ): RealCoinScreensComponent
+    }*/
 }

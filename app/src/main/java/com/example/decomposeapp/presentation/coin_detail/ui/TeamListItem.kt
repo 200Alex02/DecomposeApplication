@@ -10,11 +10,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
-import com.example.decomposeapp.data.remote.dto.TeamMember
 
 @Composable
 fun TeamListItem(
-    teamMember: TeamMember,
+    teamMember: com.example.decompose.domain.model.TeamMember,
     modifier: Modifier = Modifier
 ) {
     Column(

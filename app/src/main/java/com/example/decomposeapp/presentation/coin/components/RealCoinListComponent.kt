@@ -1,8 +1,9 @@
 package com.example.decomposeapp.presentation.coin.components
 
 import com.arkivanov.decompose.ComponentContext
-import com.example.decomposeapp.common.Resource
-import com.example.decomposeapp.domain.use_case.GetCoinsUseCase
+import com.example.decompose.domain.model.Coin
+import com.example.decompose.domain.use_case.GetCoinUseCase
+import com.example.decompose.domain.util.Resource
 import com.example.decomposeapp.presentation.coin.coin_state.CoinListState
 import com.example.decomposeapp.presentation.util.componentCoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,18 +12,43 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.math.min
 
 class RealCoinListComponent @Inject constructor(
-    private val getCoinsUseCase: GetCoinsUseCase,
+    private val getCoinsUseCase: GetCoinUseCase,
     private val onItemSelected: (id: String) -> Unit,
+    private val onBack: () -> Unit,
     componentContext: ComponentContext
 ) : ComponentContext by componentContext, CoinListComponent {
 
     private val coroutineScope = componentCoroutineScope()
 
+    private val initialDisplayCount = 20
+
+    private val fullCoinList = mutableListOf<Coin>()
+    private val displayedCoinList = mutableListOf<Coin>()
+
     override val coinListState = MutableStateFlow(
         CoinListState()
     )
+
+    override fun refreshData() {
+        if (!coinListState.value.isLoading) {
+            coinListState.value = coinListState.value.copy(isLoading = true)
+        }
+        val remainingItems = fullCoinList.size - displayedCoinList.size
+        if (remainingItems > 0) {
+            val itemsToAdd = fullCoinList.subList(
+                displayedCoinList.size,
+                displayedCoinList.size + min(remainingItems, initialDisplayCount)
+            )
+            displayedCoinList.addAll(itemsToAdd)
+            coinListState.value = CoinListState(
+                isLoading = false,
+                coins = displayedCoinList
+            )
+        }
+    }
 
     init {
         loadCoins()
@@ -30,8 +56,8 @@ class RealCoinListComponent @Inject constructor(
 
     private fun loadCoins() {
         coroutineScope.launch {
-            getCoinsUseCase().onEach { restult ->
-                when (restult) {
+            getCoinsUseCase().onEach { result ->
+                when (result) {
                     is Resource.Loading -> {
                         coinListState.update { it.copy(isLoading = true) }
                     }
@@ -40,16 +66,20 @@ class RealCoinListComponent @Inject constructor(
                         coinListState.update {
                             it.copy(
                                 isLoading = false,
-                                error = restult.message ?: "An unexpected error occured"
+                                error = result.message ?: "An unexpected error occured"
                             )
                         }
                     }
 
                     is Resource.Success -> {
+                        fullCoinList.addAll(result.data ?: emptyList())
+
+                        displayedCoinList.addAll(fullCoinList.take(initialDisplayCount))
+
                         coinListState.update {
                             it.copy(
                                 isLoading = false,
-                                coins = restult.data ?: emptyList()
+                                coins = displayedCoinList
                             )
                         }
                     }
@@ -61,4 +91,16 @@ class RealCoinListComponent @Inject constructor(
     override fun onCoinClick(coinId: String) {
         onItemSelected(coinId)
     }
+
+    override fun onBack() {
+        onBack.invoke()
+    }
+
+    /*@AssistedFactory
+    interface Factory {
+        fun create(
+            @Assisted("componentContext") componentContext: ComponentContext,
+            @Assisted onItemSelected: (id: String) -> Unit
+        ): RealCoinListComponent
+    }*/
 }
