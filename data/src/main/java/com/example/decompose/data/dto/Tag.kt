@@ -1,4 +1,4 @@
-package com.example.decompose.data.remote.dto
+package com.example.decompose.data.dto
 
 import com.google.gson.annotations.SerializedName
 

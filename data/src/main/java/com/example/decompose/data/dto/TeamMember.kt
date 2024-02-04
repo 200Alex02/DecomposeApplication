@@ -1,4 +1,4 @@
-package com.example.decompose.data.remote.dto
+package com.example.decompose.data.dto
 
 import com.example.decompose.domain.model.TeamMember
 

@@ -10,16 +10,15 @@ import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.essenty.backhandler.BackCallback
 import com.arkivanov.essenty.parcelable.Parcelable
-import com.example.decompose.domain.use_case.GetCoinUseCase
-import com.example.decompose.domain.use_case.GetCoinUseCaseById
-import com.example.decomposeapp.presentation.coin_screens.coin_screens_component.RealCoinScreensComponent
+import com.example.decomposeapp.di.RootComponentFactory
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import kotlinx.parcelize.Parcelize
-import javax.inject.Inject
 
-class RealRootBottomComponent @Inject constructor(
-    private val getCoinUseCaseById: GetCoinUseCaseById,
-    private val getCoinUseCase: GetCoinUseCase,
-    componentContext: ComponentContext,
+class RealRootBottomComponent @AssistedInject constructor(
+    private val rootComponentFactory: RootComponentFactory,
+    @Assisted("componentContext") componentContext: ComponentContext,
 ) : ComponentContext by componentContext, RootBottomComponent {
 
     private val navigationBottomStackNavigation = StackNavigation<ConfigBottom>()
@@ -29,7 +28,9 @@ class RealRootBottomComponent @Inject constructor(
             source = navigationBottomStackNavigation,
             initialConfiguration = ConfigBottom.Coin,
             handleBackButton = true,
-            childFactory = ::createChild
+            childFactory = { config, componentContext ->
+                rootComponentFactory.create(config, componentContext)
+            }
         )
 
     override fun openCoin() {
@@ -41,21 +42,6 @@ class RealRootBottomComponent @Inject constructor(
     }
 
     override val selectedItem = mutableIntStateOf(0)
-    private fun createChild(
-        config: ConfigBottom,
-        componentContext: ComponentContext
-    ): RootBottomComponent.ChildBottom =
-        when (config) {
-            is ConfigBottom.Coin -> RootBottomComponent.ChildBottom.CoinChild(
-                RealCoinScreensComponent(
-                    componentContext = componentContext,
-                    getCoinUseCase, getCoinUseCaseById
-                )
-            )
-
-            is ConfigBottom.Settings -> RootBottomComponent.ChildBottom.SettingsChild
-        }
-
 
     override fun onBack() {
         selectedItem.intValue = 0
@@ -78,6 +64,7 @@ class RealRootBottomComponent @Inject constructor(
     init {
         registerBackHandler()
     }
+
     private fun registerBackHandler() {
         backHandler.register(backCallBack)
 
@@ -86,12 +73,12 @@ class RealRootBottomComponent @Inject constructor(
             backCallBack.isEnabled = !isFirstTab
         }
     }
-    /*@AssistedFactory
+    @AssistedFactory
     interface Factory {
 
         fun create(
             @Assisted("componentContext") componentContext: ComponentContext,
         ): RealRootBottomComponent
 
-    }*/
+    }
 }

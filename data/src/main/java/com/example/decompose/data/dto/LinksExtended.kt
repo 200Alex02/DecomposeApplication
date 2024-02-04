@@ -1,4 +1,4 @@
-package com.example.decompose.data.remote.dto
+package com.example.decompose.data.dto
 
 data class LinksExtended(
     val stats: Stats,

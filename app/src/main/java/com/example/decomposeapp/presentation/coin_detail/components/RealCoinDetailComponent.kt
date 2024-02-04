@@ -40,7 +40,7 @@ class RealCoinDetailComponent @AssistedInject constructor(
                         coinDetailState.update {
                             it.copy(
                                 isLoading = false,
-                                error = result.message ?: "An unexpected error occured"
+                                error = result.message ?: "An unexpected error occurred"
                             )
                         }
                     }
@@ -52,13 +52,4 @@ class RealCoinDetailComponent @AssistedInject constructor(
             }.launchIn(coroutineScope)
         }
     }
-
-    /*@AssistedFactory
-    interface Factory{
-        fun create(
-            @Assisted("componentContext") componentContext: ComponentContext,
-            @Assisted("coinId") coinId: String
-        ): RealCoinDetailComponent
-    }*/
-
 }

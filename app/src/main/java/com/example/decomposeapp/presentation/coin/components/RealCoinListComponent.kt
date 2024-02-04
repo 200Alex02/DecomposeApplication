@@ -1,5 +1,7 @@
 package com.example.decomposeapp.presentation.coin.components
 
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import com.arkivanov.decompose.ComponentContext
 import com.example.decompose.domain.model.Coin
 import com.example.decompose.domain.use_case.GetCoinUseCase
@@ -17,7 +19,6 @@ import kotlin.math.min
 class RealCoinListComponent @Inject constructor(
     private val getCoinsUseCase: GetCoinUseCase,
     private val onItemSelected: (id: String) -> Unit,
-    private val onBack: () -> Unit,
     componentContext: ComponentContext
 ) : ComponentContext by componentContext, CoinListComponent {
 
@@ -32,9 +33,11 @@ class RealCoinListComponent @Inject constructor(
         CoinListState()
     )
 
+    override val startLoadData: MutableState<Boolean> = mutableStateOf(false)
+
     override fun refreshData() {
         if (!coinListState.value.isLoading) {
-            coinListState.value = coinListState.value.copy(isLoading = true)
+            startLoadData.value = true
         }
         val remainingItems = fullCoinList.size - displayedCoinList.size
         if (remainingItems > 0) {
@@ -47,7 +50,12 @@ class RealCoinListComponent @Inject constructor(
                 isLoading = false,
                 coins = displayedCoinList
             )
+            startLoadData.value = false
         }
+    }
+
+    override fun restartData() {
+        loadCoins()
     }
 
     init {
@@ -66,7 +74,7 @@ class RealCoinListComponent @Inject constructor(
                         coinListState.update {
                             it.copy(
                                 isLoading = false,
-                                error = result.message ?: "An unexpected error occured"
+                                error = result.message ?: "An unexpected error occurred"
                             )
                         }
                     }
@@ -91,16 +99,4 @@ class RealCoinListComponent @Inject constructor(
     override fun onCoinClick(coinId: String) {
         onItemSelected(coinId)
     }
-
-    override fun onBack() {
-        onBack.invoke()
-    }
-
-    /*@AssistedFactory
-    interface Factory {
-        fun create(
-            @Assisted("componentContext") componentContext: ComponentContext,
-            @Assisted onItemSelected: (id: String) -> Unit
-        ): RealCoinListComponent
-    }*/
 }

@@ -1,4 +1,4 @@
-package com.example.decompose.data.remote.dto
+package com.example.decompose.data.dto
 
 import com.example.decompose.domain.model.Coin
 import com.google.gson.annotations.SerializedName
@@ -7,12 +7,9 @@ class CoinDto(
     val id: String,
     @SerializedName("is_active")
     val isActive: Boolean,
-    @SerializedName("is_new")
-    val isNew: Boolean,
     val name: String,
     val rank: Int,
-    val symbol: String,
-    val type: String
+    val symbol: String
 )
 
 fun CoinDto.toCoin(): Coin {

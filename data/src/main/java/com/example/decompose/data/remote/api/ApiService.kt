@@ -1,7 +1,7 @@
 package com.example.decompose.data.remote.api
 
-import com.example.decompose.data.remote.dto.CoinDetailDto
-import com.example.decompose.data.remote.dto.CoinDto
+import com.example.decompose.data.dto.CoinDetailDto
+import com.example.decompose.data.dto.CoinDto
 import retrofit2.http.GET
 import retrofit2.http.Path
 
