@@ -6,7 +6,7 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.essenty.parcelable.Parcelable
-import com.example.decomposeapp.di.CoinScreensComponentFactory
+import com.example.decomposeapp.factory.CoinScreensComponentFactory
 import kotlinx.parcelize.Parcelize
 import javax.inject.Inject
 

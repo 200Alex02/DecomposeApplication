@@ -1,4 +1,4 @@
-package com.example.decomposeapp.di
+package com.example.decomposeapp.factory
 
 import com.arkivanov.decompose.ComponentContext
 import com.example.decomposeapp.presentation.coin_screens.coin_screens_component.RealCoinScreensComponent
