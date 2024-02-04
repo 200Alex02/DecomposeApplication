@@ -1,4 +1,4 @@
-# Bybit (Jetpack Compose) 
+# DecomposeApplication (Hunt Rangers) 
 
 Bybit app built with jetpack Compose and MVVM architecture.<br>
 
