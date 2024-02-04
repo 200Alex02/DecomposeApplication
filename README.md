@@ -1,7 +1,5 @@
 # DecomposeApplication (Hunt Rangers) 
 
-Bybit app built with jetpack Compose and MVVM architecture.<br>
-
 <p float="left">
   <img width="30%" height="50%" src="https://github.com/200Alex02/DecomposeApplication/blob/master/Screenshot_20240204_181544.png"/>
   <img width="30%" height="50%" src="https://github.com/200Alex02/DecomposeApplication/blob/master/Screenshot_20240204_181618.png"/>
