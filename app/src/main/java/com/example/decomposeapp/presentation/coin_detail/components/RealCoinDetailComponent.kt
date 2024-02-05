@@ -1,7 +1,9 @@
 package com.example.decomposeapp.presentation.coin_detail.components
 
+import android.app.Application
 import com.arkivanov.decompose.ComponentContext
 import com.example.decompose.domain.use_case.GetCoinUseCaseById
+import com.example.decomposeapp.R
 import com.example.decomposeapp.presentation.coin_detail.coin_detail_state.CoinDetailState
 import com.example.decomposeapp.presentation.util.componentCoroutineScope
 import dagger.assisted.AssistedInject
@@ -14,6 +16,7 @@ import kotlinx.coroutines.launch
 class RealCoinDetailComponent @AssistedInject constructor(
     private val getCoinUseCaseById: GetCoinUseCaseById,
     private val coinId: String,
+    private val application: Application,
     componentContext: ComponentContext
 ) : ComponentContext by componentContext, CoinDetailComponent {
 
@@ -39,7 +42,7 @@ class RealCoinDetailComponent @AssistedInject constructor(
                         coinDetailState.update {
                             it.copy(
                                 isLoading = false,
-                                error = result.message ?: "An unexpected error occurred"
+                                error = result.message ?: application.getString(R.string.htttp_exeption)
                             )
                         }
                     }

@@ -1,9 +1,11 @@
 package com.example.decomposeapp.presentation.coin.components
 
+import android.app.Application
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import com.arkivanov.decompose.ComponentContext
 import com.example.decompose.domain.use_case.GetCoinUseCase
+import com.example.decomposeapp.R
 import com.example.decomposeapp.presentation.coin.coin_state.CoinListState
 import com.example.decomposeapp.presentation.util.componentCoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,6 +19,7 @@ import kotlin.math.min
 class RealCoinListComponent @Inject constructor(
     private val getCoinsUseCase: GetCoinUseCase,
     private val onItemSelected: (id: String) -> Unit,
+    private val application: Application,
     componentContext: ComponentContext
 ) : ComponentContext by componentContext, CoinListComponent {
 
@@ -70,7 +73,7 @@ class RealCoinListComponent @Inject constructor(
                         coinListState.update {
                             it.copy(
                                 isLoading = false,
-                                error = result.message ?: "An unexpected error occurred"
+                                error = result.message ?: application.getString(R.string.htttp_exeption)
                             )
                         }
                     }

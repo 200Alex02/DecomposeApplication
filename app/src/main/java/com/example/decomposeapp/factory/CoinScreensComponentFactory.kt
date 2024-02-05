@@ -1,5 +1,6 @@
 package com.example.decomposeapp.factory
 
+import android.app.Application
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.router.stack.StackNavigation
@@ -15,7 +16,8 @@ import javax.inject.Inject
 
 class CoinScreensComponentFactory @Inject constructor(
     private val getCoinUseCase: GetCoinUseCase,
-    private val getCoinUseCaseById: GetCoinUseCaseById
+    private val getCoinUseCaseById: GetCoinUseCaseById,
+    private val application: Application
 ) {
     @OptIn(ExperimentalDecomposeApi::class)
     fun create(
@@ -30,7 +32,8 @@ class CoinScreensComponentFactory @Inject constructor(
                         onItemSelected = { coinId ->
                             navigation.pushNew(RealCoinScreensComponent.ChildConfig.Details(coinId))
                         },
-                        getCoinsUseCase = getCoinUseCase
+                        getCoinsUseCase = getCoinUseCase,
+                        application = application
                     )
                 )
             }
@@ -40,7 +43,8 @@ class CoinScreensComponentFactory @Inject constructor(
                     RealCoinDetailComponent(
                         componentContext = componentContext,
                         coinId = childConfig.coinId,
-                        getCoinUseCaseById = getCoinUseCaseById
+                        getCoinUseCaseById = getCoinUseCaseById,
+                        application = application
                     )
                 )
             }
