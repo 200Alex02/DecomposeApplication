@@ -22,8 +22,6 @@ class RealCoinListComponent @Inject constructor(
 
     private val coroutineScope = componentCoroutineScope()
 
-    private val initialDisplayCount = 20
-
     private val fullCoinList = mutableListOf<com.example.decompose.domain.model.Coin>()
     private val displayedCoinList = mutableListOf<com.example.decompose.domain.model.Coin>()
 
@@ -96,5 +94,9 @@ class RealCoinListComponent @Inject constructor(
 
     override fun onCoinClick(coinId: String) {
         onItemSelected(coinId)
+    }
+
+    companion object {
+        const val initialDisplayCount = 20
     }
 }
