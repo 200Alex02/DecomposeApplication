@@ -1,2 +1,0 @@
-int string htttp_exeption 0x0
-int string io_exeption 0x0
