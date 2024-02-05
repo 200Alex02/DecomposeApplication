@@ -1,6 +1,11 @@
-@file:Suppress("UnstableApiUsage", "UnstableApiUsage", "UnstableApiUsage", "UnstableApiUsage",
+@file:Suppress(
+    "UnstableApiUsage", "UnstableApiUsage", "UnstableApiUsage",
     "UnstableApiUsage"
 )
+
+include(":domain")
+
+
 
 pluginManagement {
     repositories {
@@ -22,4 +27,3 @@ include(":app")
 include(":data")
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
-include(":domain")

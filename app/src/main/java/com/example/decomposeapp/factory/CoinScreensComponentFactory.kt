@@ -4,8 +4,8 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.pushNew
-import com.example.decompose.data.use_case.GetCoinUseCaseByIdImpl
-import com.example.decompose.data.use_case.GetCoinsUseCaseImpl
+import com.example.decompose.domain.use_case.GetCoinUseCase
+import com.example.decompose.domain.use_case.GetCoinUseCaseById
 import com.example.decomposeapp.presentation.coin.components.RealCoinListComponent
 import com.example.decomposeapp.presentation.coin_detail.components.RealCoinDetailComponent
 import com.example.decomposeapp.presentation.coin_screens.coin_screens_component.CoinScreensComponent
@@ -14,8 +14,8 @@ import javax.inject.Inject
 
 
 class CoinScreensComponentFactory @Inject constructor(
-    private val getCoinUseCase: GetCoinsUseCaseImpl,
-    private val getCoinUseCaseById: GetCoinUseCaseByIdImpl
+    private val getCoinUseCase: GetCoinUseCase,
+    private val getCoinUseCaseById: GetCoinUseCaseById
 ) {
     @OptIn(ExperimentalDecomposeApi::class)
     fun create(

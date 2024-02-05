@@ -1,7 +1,6 @@
 package com.example.decompose.data.dto
 
 
-import com.example.decompose.domain.model.CoinDetail
 import com.google.gson.annotations.SerializedName
 
 data class CoinDetailDto(
@@ -39,18 +38,18 @@ data class CoinDetailDto(
     val tags: List<Tag>?,
     val team: List<TeamMember>,
     val type: String,
-    val whitepaper: Whitepaper
+    val whitePaper: WhitePaper
 )
 
-fun CoinDetailDto.toCoinDetail(): CoinDetail {
-    return CoinDetail(
+fun CoinDetailDto.toCoinDetail(): com.example.decompose.domain.model.CoinDetail {
+    return com.example.decompose.domain.model.CoinDetail(
         coinId = id,
         name = name,
         description = description,
         symbol = symbol,
         rank = rank,
         isActive = isActive,
-        tags = tags?.map { it.name } ?: emptyList() ,
+        tags = tags?.map { it.name } ?: emptyList(),
         team = team.map { it.toTeamMemberDomain() }
     )
 }

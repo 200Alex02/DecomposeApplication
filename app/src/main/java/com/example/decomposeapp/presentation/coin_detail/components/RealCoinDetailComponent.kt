@@ -1,7 +1,6 @@
 package com.example.decomposeapp.presentation.coin_detail.components
 
 import com.arkivanov.decompose.ComponentContext
-import com.example.decompose.domain.util.Resource
 import com.example.decompose.domain.use_case.GetCoinUseCaseById
 import com.example.decomposeapp.presentation.coin_detail.coin_detail_state.CoinDetailState
 import com.example.decomposeapp.presentation.util.componentCoroutineScope
@@ -32,11 +31,11 @@ class RealCoinDetailComponent @AssistedInject constructor(
         coroutineScope.launch {
             getCoinUseCaseById(coinId).onEach { result ->
                 when (result) {
-                    is Resource.Loading -> {
+                    is com.example.decompose.domain.util.Resource.Loading -> {
                         coinDetailState.update { it.copy(isLoading = true) }
                     }
 
-                    is Resource.Error -> {
+                    is com.example.decompose.domain.util.Resource.Error -> {
                         coinDetailState.update {
                             it.copy(
                                 isLoading = false,
@@ -45,7 +44,7 @@ class RealCoinDetailComponent @AssistedInject constructor(
                         }
                     }
 
-                    is Resource.Success -> {
+                    is com.example.decompose.domain.util.Resource.Success -> {
                         coinDetailState.update { it.copy(isLoading = false, coin = result.data) }
                     }
                 }

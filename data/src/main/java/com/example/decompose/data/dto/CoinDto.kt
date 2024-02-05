@@ -1,6 +1,5 @@
 package com.example.decompose.data.dto
 
-import com.example.decompose.domain.model.Coin
 import com.google.gson.annotations.SerializedName
 
 class CoinDto(
@@ -12,8 +11,8 @@ class CoinDto(
     val symbol: String
 )
 
-fun CoinDto.toCoin(): Coin {
-    return Coin(
+fun CoinDto.toCoin(): com.example.decompose.domain.model.Coin {
+    return com.example.decompose.domain.model.Coin(
         id = id,
         isActive = isActive,
         name = name,

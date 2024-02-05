@@ -16,12 +16,11 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.example.decompose.domain.model.Coin
 
 @Composable
 fun CoinListItem(
-    coin: Coin,
-    onItemClick: (Coin) -> Unit
+    coin: com.example.decompose.domain.model.Coin,
+    onItemClick: (com.example.decompose.domain.model.Coin) -> Unit
 ) {
     Row(
         modifier = Modifier

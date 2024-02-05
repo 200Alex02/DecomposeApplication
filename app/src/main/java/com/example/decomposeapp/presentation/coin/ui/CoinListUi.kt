@@ -82,7 +82,9 @@ fun CoinListUi(
                         .padding(horizontal = 20.dp)
                 )
                 Button(
-                    modifier = Modifier.padding(top = 10.dp, end = 20.dp, start = 20.dp),
+                    modifier = Modifier
+                        .padding(top = 10.dp, end = 20.dp, start = 20.dp)
+                        .align(Alignment.CenterHorizontally),
                     onClick = {
                         component.restartData()
                     })

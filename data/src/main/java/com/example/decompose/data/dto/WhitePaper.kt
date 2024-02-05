@@ -1,6 +1,6 @@
 package com.example.decompose.data.dto
 
-data class Whitepaper(
+data class WhitePaper(
     val link: String,
     val thumbnail: String
 )

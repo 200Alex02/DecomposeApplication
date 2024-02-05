@@ -1,11 +1,9 @@
 package com.example.decompose.data.di
 
-import android.app.Application
 import com.example.decompose.data.common.Constants
 import com.example.decompose.data.remote.api.ApiService
 import com.example.decompose.data.repository.CoinRepositoryImpl
-import com.example.decompose.data.use_case.GetCoinUseCaseByIdImpl
-import com.example.decompose.data.use_case.GetCoinsUseCaseImpl
+import com.example.decompose.domain.repository.CoinRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -44,25 +42,7 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideCoinRepository(api: ApiService): CoinRepositoryImpl {
+    fun provideCoinRepository(api: ApiService): CoinRepository {
         return CoinRepositoryImpl(api)
-    }
-
-    @Provides
-    @Singleton
-    fun provideGetCoinUseCase(
-        repository: CoinRepositoryImpl,
-        application: Application
-    ): GetCoinsUseCaseImpl {
-        return GetCoinsUseCaseImpl(repository, application)
-    }
-
-    @Provides
-    @Singleton
-    fun provideGetCoinUseCaseById(
-        repository: CoinRepositoryImpl,
-        application: Application
-    ): GetCoinUseCaseByIdImpl {
-        return GetCoinUseCaseByIdImpl(repository, application)
     }
 }

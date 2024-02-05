@@ -3,9 +3,7 @@ package com.example.decomposeapp.presentation.coin.components
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import com.arkivanov.decompose.ComponentContext
-import com.example.decompose.domain.model.Coin
 import com.example.decompose.domain.use_case.GetCoinUseCase
-import com.example.decompose.domain.util.Resource
 import com.example.decomposeapp.presentation.coin.coin_state.CoinListState
 import com.example.decomposeapp.presentation.util.componentCoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -26,8 +24,8 @@ class RealCoinListComponent @Inject constructor(
 
     private val initialDisplayCount = 20
 
-    private val fullCoinList = mutableListOf<Coin>()
-    private val displayedCoinList = mutableListOf<Coin>()
+    private val fullCoinList = mutableListOf<com.example.decompose.domain.model.Coin>()
+    private val displayedCoinList = mutableListOf<com.example.decompose.domain.model.Coin>()
 
     override val coinListState = MutableStateFlow(
         CoinListState()
@@ -66,11 +64,11 @@ class RealCoinListComponent @Inject constructor(
         coroutineScope.launch {
             getCoinsUseCase().onEach { result ->
                 when (result) {
-                    is Resource.Loading -> {
+                    is com.example.decompose.domain.util.Resource.Loading -> {
                         coinListState.update { it.copy(isLoading = true) }
                     }
 
-                    is Resource.Error -> {
+                    is com.example.decompose.domain.util.Resource.Error -> {
                         coinListState.update {
                             it.copy(
                                 isLoading = false,
@@ -79,7 +77,7 @@ class RealCoinListComponent @Inject constructor(
                         }
                     }
 
-                    is Resource.Success -> {
+                    is com.example.decompose.domain.util.Resource.Success -> {
                         fullCoinList.addAll(result.data ?: emptyList())
 
                         displayedCoinList.addAll(fullCoinList.take(initialDisplayCount))
